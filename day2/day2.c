@@ -11,7 +11,7 @@ int main(int argc, char** argv)
         total_ribbon = 0;
 
         while (scanf(" %dx%dx%d", &l, &w, &h) == 3) {
-                temp_paper  = 2*l*w + 2*w*h + 2*h*l; 
+                temp_paper  = 2*l*w + 2*w*h + 2*h*l;
                 temp_paper += fmin(fmin(l*w, w*h), h*l);
 
                 temp_ribbon  = fmin(fmin(2*l+2*w, 2*w+2*h), 2*h+2*l);
