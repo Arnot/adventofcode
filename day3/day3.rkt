@@ -1,5 +1,6 @@
 #lang racket
-(require scheme/mpair)
+(require scheme/mpair
+         plot)
 
 (define (visit-houses input task)
   ;; Sleigh driver positions
@@ -54,8 +55,16 @@
 
   (sequence-for-each visit-one-house input)
 
-  (length houses)
-  )
+  (display  (length houses))
+  (newline)
+
+  ;; Make (x, y)-vector from houses-list
+  (define plot-houses (map vector
+                           (map car houses)
+                           (map cdr houses)))
+  (plot (points plot-houses #:color (if (eq? task 1)
+                                        'blue
+                                        'red))))
 
 ;; test cases
 ;; (visit-houses "^>v<" 2)
