@@ -2,22 +2,19 @@
 
 (require file/md5)
 
-(define magic "iwrupvqb")
+(define (mine input target)
+  (define (mine-helper iteration)
+    (let ([test-string (string-append input (number->string iteration))])
+      (let ([hashed-string (bytes->string/utf-8 (md5 test-string))])
+        (if (string=? (substring hashed-string 0 (string-length target))
+                      target)
+            (display iteration)
+            (mine-helper (add1 iteration))))))
 
-(define (mine number target)
-  (define test-string
-    (string-append magic (number->string number)))
-
-  (if (string=? (substring
-                 (bytes->string/utf-8
-                  (md5 test-string))
-                 0 (string-length target))
-                target)
-      (display number)
-      (mine (add1 number) target)))
+  (mine-helper 0))
 
 (display "Part 1: ")
-(mine 10000 "00000")
+(mine "iwrupvqb" "00000")
 (newline)
 (display "Part 2: ")
-(mine 10000 "000000")
+(mine "iwrupvqb" "000000")
