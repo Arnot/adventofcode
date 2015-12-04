@@ -8,14 +8,14 @@
 
 (define (mine number)
   (define test-string
-    (format "~a~a" magic number))
+    (string-append magic (number->string number)))
 
   (if (string=? (substring
                  (bytes->string/utf-8
                   (md5 test-string))
-                 0 5)
-                "00000")
+                 0 6)
+                "000000")
       (format "Found number: ~a" number)
       (mine (+ 1 number))))
 
-(mine 0)
+(time  (mine 0))
