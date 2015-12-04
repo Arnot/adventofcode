@@ -1,21 +1,23 @@
 #lang racket
 
-(require file/md5
-         racket/format)
+(require file/md5)
 
-(define found #f)
 (define magic "iwrupvqb")
 
-(define (mine number)
+(define (mine number target)
   (define test-string
     (string-append magic (number->string number)))
 
   (if (string=? (substring
                  (bytes->string/utf-8
                   (md5 test-string))
-                 0 6)
-                "000000")
-      (format "Found number: ~a" number)
-      (mine (+ 1 number))))
+                 0 (string-length target))
+                target)
+      (display number)
+      (mine (add1 number) target)))
 
-(time  (mine 0))
+(display "Part 1: ")
+(mine 10000 "00000")
+(newline)
+(display "Part 2: ")
+(mine 10000 "000000")
