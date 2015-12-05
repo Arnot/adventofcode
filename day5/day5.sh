@@ -1,10 +1,8 @@
 #!/bin/bash
 
-grep ".*[aeiou].*[aeiou].*[aeiou].*" day5input > regex1output
-wc -l regex1output
-grep -E "(.)\1{1}" regex1output > regex2output
-wc -l regex2output
-grep -Ev "ab|cd|pq|xy" regex2output > regex3output
-wc -l regex3output
+echo "Task 1"
+grep ".*[aeiou].*[aeiou].*[aeiou].*" day5input | grep -E "(.)\1" | grep -Ev "ab|cd|pq|xy" | wc -l
 
-rm regex*output
+echo "Task 2"
+grep -E "(..).*\1" day5input | grep -E "(.).\1" | wc -l
+
