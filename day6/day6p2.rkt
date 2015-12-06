@@ -38,5 +38,3 @@
 (call-with-input-file "day6input"
   (λ (in-port)
     (switch-lights in-port)))
-
-(vector-argmin identity lights)
