@@ -114,4 +114,8 @@
 ;; (for ([(k v) all-wires])
 ;;   (printf "~a: ~a\n" k v))
 
+;; Changed the input for part 2
+;; 1674 -> b  in original
+;; 46065 -> b in part 2
 (hash-ref all-wires "a")
+(hash-ref all-wires "b")
