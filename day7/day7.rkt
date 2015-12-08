@@ -1,7 +1,7 @@
 #lang racket
+;; I probably should have used structs here
 
-;; Ugly semi-vm/emulator
-;; Reads all input into a list of (("OPERATION") inputs...)
+;; Reads all input into a list of ("OPERATION" inputs...)
 ;; Then iterates through this list until all inputs are calculated
 ;; If an operation is found that does not have two calculated inputs yet,
 ;; it is removed from the head of the list and appended again.
@@ -102,5 +102,7 @@
 ;; Changed the input file for part 2
 ;; 1674 -> b  in original
 ;; 46065 -> b in part 2
+(for ([(k v) all-wires])
+  (printf "~a: ~a\n" k v))
 (hash-ref all-wires "a")
 (hash-ref all-wires "b")
