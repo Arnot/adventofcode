@@ -55,9 +55,6 @@
 
 ;; Check if all input values of a gate are known
 (define (inputs-known? gate)
-  ;; (display "Current gate: ")
-  ;; (display gate)
-  ;; (newline)
   (or (and (string=? "ASSIGN" (car gate))
            (not (eq? (get-wire (cadr gate)) #f)))
       (and (string=? "NOT" (car gate))
@@ -69,20 +66,11 @@
   (if (eq? 1 (length input-list))
       (let ([operation (caar input-list)]
             [connects  (cdar input-list)])
-        ;; (display "Last op: ")
-        ;; (display (car input-list))
         (apply-op operation connects))
       (if (inputs-known? (car input-list))
           (let ([operation (caar input-list)]
                 [connects  (cdar input-list)])
             (apply-op operation connects)
-
-            ;; (display (- (length input-list) 1))
-            ;; (display " logic gates to go!")
-            ;; (newline)
-            ;; (display input-list)
-            ;; (newline)
-
             (process-ops (cdr input-list)))
           ;; move head to tail and process the rest first
           ;; if inputs are not yet known
@@ -102,10 +90,6 @@
               (set! inputs (append inputs
                                    (list (cons (car operation) (map get-number connects))))))
           (process-input-file in-port)))))
-
-;; (call-with-input-file "testinput"
-;;   (λ (in-port)
-;;     (process-input-file in-port)))
 
 (call-with-input-file "day7input"
   (λ (in-port)
