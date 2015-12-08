@@ -2,12 +2,18 @@
 
 ;; Ugly semi-vm/emulator
 ;; Reads all input into a list of (("OPERATION") inputs...)
-;; Then iterates through this list untill all inputs are calculated
+;; Then iterates through this list until all inputs are calculated
 ;; If an operation is found that does not have two calculated inputs yet,
 ;; it is removed from the head of the list and appended again.
 ;; Once a port has been processed, it is removed.
 
-;; Topological sort beforehand would be nicer and faster, but this works pretty ok too.
+;; Topological sort beforehand would be nicer and probably faster, but this
+;; works pretty ok too.
+
+;; Cool way to show all wires:
+;(for ([(k v) all-wires])
+;  (printf "~a: ~a\n" k v))
+
 
 ;; Hash table of all wires
 (define all-wires (make-hash))
@@ -74,9 +80,7 @@
             (process-ops (cdr input-list)))
           ;; move head to tail and process the rest first
           ;; if inputs are not yet known
-          (if (> (length (car input-list)) 1)
-              (process-ops (append (cdr input-list) (list  (car input-list))))
-              'error-strange-list))))
+          (process-ops (append (cdr input-list) (list  (car input-list)))))))
 
 (define (process-input-file in-port)
   (let ([line (read-line in-port)])
@@ -95,10 +99,7 @@
   (λ (in-port)
     (process-input-file in-port)))
 
-;; (for ([(k v) all-wires])
-;;   (printf "~a: ~a\n" k v))
-
-;; Changed the input for part 2
+;; Changed the input file for part 2
 ;; 1674 -> b  in original
 ;; 46065 -> b in part 2
 (hash-ref all-wires "a")
