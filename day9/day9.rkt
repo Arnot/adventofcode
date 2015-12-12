@@ -61,9 +61,8 @@
 (for ([city all-cities])
   (traveling-santa city empty 0))
 
-(length all-routes)
 (define min-route (apply min (map route-distance all-routes)))
-(define max-route (apply min (map route-distance all-routes)))
+(define max-route (apply max (map route-distance all-routes)))
 
 (define (output-route rt)
   (display (route-path rt))
@@ -76,4 +75,4 @@
                             (eq? min-route (route-distance distance))) all-routes))
 ;; Print longest path
 (map output-route (filter (λ (distance)
-                            (eq? min-route (route-distance distance))) all-routes))
+                            (eq? max-route (route-distance distance))) all-routes))
