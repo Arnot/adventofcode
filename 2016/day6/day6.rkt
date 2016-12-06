@@ -13,8 +13,15 @@
   (list->string
    (map (λ (str) (string-ref str i)) input)))
 
+(displayln "Part 1")
 (for ([i (in-range 0 8)])
   (display (caar
             (sort (hash->list
                    (count-letters (letters input i)))
                   > #:key cdr))))
+(displayln "\nPart 2")
+(for ([i (in-range 0 8)])
+  (display (caar
+            (sort (hash->list
+                   (count-letters (letters input i)))
+                  < #:key cdr))))
