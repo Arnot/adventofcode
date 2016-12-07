@@ -1,10 +1,6 @@
 #lang racket
 
 (define input (file->lines "day7.input"))
-;; (define input (list "abba[mnop]qrst"
-                    ;; "abcd[bddb]xyyx"
-                    ;; "aaaa[qwer]tyui"
-                    ;; "ioxxoj[asdfgh]zxcvbn"))
 
 (define (abba? str)
   (for/or ([i (in-range 0 (- (string-length str) 3))])
@@ -57,5 +53,5 @@
 (displayln "Part 1")
 (displayln (count identity (map TLS? input)))
 
-(displayln "Part 1")
+(displayln "Part 2")
 (displayln (count identity (map SSL? input)))
