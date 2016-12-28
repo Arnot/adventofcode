@@ -1,6 +1,7 @@
 #lang racket
 
 (define magic-number 1362)
+(define starting-point (cons 1 1))
 
 (define cells (make-hash))
 
@@ -35,26 +36,10 @@
   (when (open-space? (add1 x) y)
     (set! neighbors (append neighbors (list (cons (add1 x) y)))))
 
-  ;; No diagonals!
-  ;; (when (and (<= 0 (sub1 x))
-  ;;            (<= 0 (sub1 y))
-  ;;            (open-space? (sub1 x) (sub1 y)))
-  ;;   (set! neighbors (append neighbors (list (cons (sub1 x) (sub1 y))))))
-
-  ;; (when (and (<= 0 (sub1 y))
-  ;;            (open-space? (add1 x) (sub1 y)))
-  ;;   (set! neighbors (append neighbors (list (cons (add1 x) (sub1 y))))))
-
-  ;; (when (and (<= 0 (sub1 x))
-  ;;            (open-space? (sub1 x) (add1 y)))
-  ;;   (set! neighbors (append neighbors (list (cons (sub1 x) (add1 y))))))
-
-  ;; (when (open-space? (add1 x) (add1 y))
-  ;;   (set! neighbors (append neighbors (list (cons (add1 x) (add1 y))))))
-
   neighbors)
 
 (define (walk-to-cell destx desty)
+
   (define (loop lst)
     (let* ([pos (car lst)]
            [x (car pos)]
@@ -65,10 +50,28 @@
       (map (λ (p) (hash-set! cells p (add1 cell-dist))) neighbors)
       (if target-destination
           target-destination
-          (loop (append (cdr lst) neighbors)))
-      ))
-  (loop (list (cons 1 1))))
+          (loop (append (cdr lst) neighbors)))))
+  (loop (list starting-point)))
 
-(hash-set! cells (cons 1 1) 0)
+(define (find-locations n)
+  (define (loop lst)
+    (let* ([pos (car lst)]
+           [x (car pos)]
+           [y (cdr pos)]
+           [cell-dist (hash-ref cells pos #f)]
+           [neighbors (check-neighbors x y)])
+      (map (λ (p) (hash-set! cells p (add1 cell-dist))) neighbors)
+      (if (>= cell-dist n)
+          (length (hash->list cells))
+          (loop (append (cdr lst) neighbors)))))
 
+  (loop (list starting-point)))
+
+
+(hash-set! cells starting-point 0)
 (walk-to-cell 31 39)
+
+(set! cells (make-hash))
+(hash-set! cells starting-point 0)
+
+(find-locations 50)
