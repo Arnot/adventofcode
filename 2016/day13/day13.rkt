@@ -71,7 +71,25 @@
 (hash-set! cells starting-point 0)
 (walk-to-cell 31 39)
 
+(for ([y (in-range 0 45)])
+  (for ([x (in-range 0 45)])
+    (let ([p (cons x y)])
+      (display (~a  #:width 3 (hash-ref cells p (if (open-space? x y)
+                                         ". "
+                                         "# "))
+                   " "))))
+  (display "\n"))
+
 (set! cells (make-hash))
 (hash-set! cells starting-point 0)
 
 (find-locations 50)
+
+(for ([y (in-range 0 30)])
+  (for ([x (in-range 0 30)])
+    (let ([p (cons x y)])
+      (display (~a #:width 3 (hash-ref cells p (if (open-space? x y)
+                                         ". "
+                                         "# "))
+                   " "))))
+  (display "\n"))
