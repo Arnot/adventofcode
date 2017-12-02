@@ -12,7 +12,7 @@
          (result 0))
     (dolist (i in-list)
       (when (= i prev)
-        (setf result (+ result i)))
+        (incf result i))
       (setf prev i))
     result))
 
